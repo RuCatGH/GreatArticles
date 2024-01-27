@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'articles/css/article.css' %}">
+{% if category %}
+    <meta name="description" content="{{ category.description }}"/>
+    <meta name="keywords" content="{{ category.keywords }}" />
+{% else %}
+    <meta name="description" content="Добро пожаловать на наш увлекательный сайт, где вы найдете множество интересных статей на различные темы: наука, технологии, здоровье, экономика и многое другое! Здесь вы сможете узнавать что-то новое и интересное каждый день!"/>
+    <meta name="keywords" content="познавательные статьи, интересные статьи, научные статьи, статьи обо всём" />
+{% endif %}
+{% endblock %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+    {% include 'includes/svg-icon.html' %}
+    <section class="main-wrapper">
+        {% if category %}
+            <div class="topic">Тема: {{category}}</div>
+        {% else %}
+        <div class="top-article">
+             <div class="filter">
+                <a href="{% url 'articles:index' %}" class="btn-grey" style="margin-right: -6px;">Все потоки</a>
+                <a href="{% url 'articles:articles_filter' pk='new' %}" class="btn-grey {% if current_page == 'new' %}filter-btn-active{% endif %}" style="border-radius: 0; margin-right: -6px;">Новое</a>
+                <div class="dropdown">
+                    <button onclick="drop_btn()" class="btn-grey dropbtn {% if current_page == 'week' or current_page == 'month' or current_page == 'alltime' %}filter-btn-active{% endif %}" style="border-radius: 0 5px 5px 0;">
+                        Лучшее
+                        <div id="arrow" class="arrow">
+                            <span class="arrow-left"></span>
+                            <span class="arrow-right"></span>
+                        </div>
+                    </button>
+                    <div id="myDropdown" class="dropdown-content">
+                        <a href="{% url 'articles:articles_filter' pk='week' %}">За неделю</a>
+                        <a href="{% url 'articles:articles_filter' pk='month' %}">За месяц</a>
+                        <a href="{% url 'articles:articles_filter' pk='alltime' %}" style="margin-bottom: 19px;">За всё время</a>
+                    </div>
+                </div>
+            </div>
+            <a class="telegram-button" target="_blank" href="https://t.me/GreatArticlesChannel">
+                <img src="{% static 'articles/img/icon-tg.svg' %}" alt="Телеграм">
+                <span>Читайте в Telegram!</span>
+            </a>
+        </div>
+        {% endif %}
+        <div class="article-wrapper">
+            <div class="main-article-wrapper">
+                {% if latest_articles_list %}
+                    {% for a in latest_articles_list %}
+                    <article class="block-article" itemscope itemtype="http://schema.org/Article">
+                        <a itemprop="url" href="{{ a.get_absolute_url }}">
+                           {% if a.article_image %}
+                                <div>
+                                    <img itemprop="image" class="list-article-img" src="{{a.article_image.url}}" alt="{{ a.article_title }}">
+                                </div>
+                           {% endif %}
+                            <div class="article-main">
+                                <div class="article-text">
+                                    <header class="article-name">
+                                        <h2 itemprop="headline">{{a.article_title}}</h2>
+                                    </header>
+                                    <div class="article-main-text" itemprop="description"><p>{{a.article_text|truncatewords:30|striptags|safe}}</p></div>
+                                </div>
+                                <div class="article-footer">
+                                    <svg class="eye-svg">
+                                        <use xlink:href="#eye"></use>
+                                    </svg>
+
+                                    <span class="number-views">{{a.views.count}}</span>
+                                    <svg class="comment-svg">
+                                        <use xlink:href="#comment"></use>
+                                    </svg>
+                                    <span class="number-comment">{{a.comment.count}}</span>
+                                </div>
+                            </div>
+                        </a>
+                        {% if forloop.counter == 3 %}
+                            <!-- Вставьте блок рекламы после третьей статьи -->
+                            <div class="adblock-list">
+                                <!-- Yandex.RTB R-A-2742101-7 -->
+                                <div id="yandex_rtb_R-A-2742101-7"></div>
+                                <script>
+                                window.yaContextCb.push(()=>{
+                                    Ya.Context.AdvManager.render({
+                                        "blockId": "R-A-2742101-7",
+                                        "renderTo": "yandex_rtb_R-A-2742101-7"
+                                    })
+                                })
+                                </script>
+                            </div>
+                        {% endif %}
+                    </article>
+
+                    {% endfor %}
+                {% else %}
+                    <div class="not-exist-articles">К сожалению, в данной категории в настоящее время нет статей. Пожалуйста, проверьте позже или поищите в других категориях для нахождения интересующей вас информации.</div>
+                {% endif %}
+                {% if latest_articles_list.has_other_pages %}
+                <div class="pagination">
+                    {% if latest_articles_list.has_previous %}
+                        <a rel="prev" href="?page={{ latest_articles_list.previous_page_number  }}" class="pagination-arrow left" title="Prev Page">
+                            <svg width="17" height="21" viewBox="0 0 17 21" xml:space="preserve">
+                                <polyline fill="none" stroke="#5A6777" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" points="
+                                14,20 2,10.4999 14,1"/>
+                            </svg>
+                        </a>
+                    {% else %}
+                        <span class="pagination-arrow left">
+                            <svg width="17" height="21" viewBox="0 0 17 21" xml:space="preserve">
+                                <polyline fill="none" stroke="#5A6777" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" points="
+                                14,20 2,10.4999 14,1"/>
+                            </svg>
+                        </span>
+                    {% endif %}
+                    <div class="pagination-numbers">
+                        {% if not latest_articles_list.number == 1 %}
+                            <a class="pagination-number" href="?page=1">1</a>
+                        {% endif %}
+                        {% if latest_articles_list.number|add:-1 > 2 %}
+                            <span class="pagination-dots">&hellip;</span>
+                        {% endif %}
+                        {% for p in latest_articles_list.paginator.page_range %}
+                                {% if latest_articles_list.number == p %}
+                                    <span class="pagination-number page-selected">{{p}}</span>
+                                {% elif p >= latest_articles_list.number|add:-1 and p <= latest_articles_list.number|add:1  %}
+                                    {% if p != 1 and p != latest_articles_list.paginator.num_pages %}
+                                        <a class="pagination-number" href="?page={{ p }}">{{ p }}</a>
+                                    {% endif %}
+                                {% endif %}
+                        {% endfor %}
+
+                        {% if latest_articles_list.paginator.num_pages > latest_articles_list.number|add:2 %}
+                            <span class="pagination-dots">&hellip;</span>
+                        {% endif %}
+                        {% if not latest_articles_list.number == latest_articles_list.paginator.num_pages %}
+                            <a class="pagination-number" href="?page={{latest_articles_list.paginator.num_pages}}">{{latest_articles_list.paginator.num_pages}}</a>
+                        {% endif %}
+                    </div>
+                    {% if latest_articles_list.has_next %}
+                    <a rel="next" href="?page={{ latest_articles_list.next_page_number }}" class="pagination-arrow right" title="Next Page">
+                      <svg width="17" height="21" viewBox="0 0 17 21" xml:space="preserve">
+                            <polyline fill="none" stroke="#5A6777" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" points="
+                            14,20 2,10.4999 14,1"/>
+                      </svg>
+                    </a>
+                    {% else %}
+                         <a class="pagination-arrow right" rel="next" href="?page=1" title="Next Page">
+                              <svg width="17" height="21" viewBox="0 0 17 21" xml:space="preserve">
+                                    <polyline fill="none" stroke="#5A6777" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" points="
+                                    14,20 2,10.4999 14,1"/>
+                              </svg>
+                        </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+
+        {% include 'includes/sidebar.html' %}
+        </div>
+    </section>
+{% endblock %}
+{% block scripts %}<script src="{% static 'articles/js/code.js' %}"></script>{% endblock %}
+

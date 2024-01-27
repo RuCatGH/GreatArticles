@@ -1,0 +1,63 @@
+<div class="sidebars">
+    <aside class="adblock" style="margin: 0 0 30px 0"><!-- Yandex.RTB R-A-2742101-1 -->
+        <!-- Yandex.RTB R-A-2742101-2 -->
+        <div id="yandex_rtb_R-A-2742101-2"></div>
+        <script>
+        window.yaContextCb.push(()=>{
+            Ya.Context.AdvManager.render({
+                "blockId": "R-A-2742101-2",
+                "renderTo": "yandex_rtb_R-A-2742101-2"
+            })
+        })
+        </script>
+    </aside>
+    <aside class="popular">
+        <div class="popular-text">Читают сейчас</div>
+        <hr class="popular-line">
+        {% if popular %}
+        <article>
+        {% for a in popular %}
+                <header class="popular-article">
+                    <a class="title-link-popular" href="{{ a.get_absolute_url }}">
+                        <h2>{{a.article_title}}</h2>
+                    </a>
+                    <div class="popular-footer">
+                        <svg class="eye-svg">
+                            <use xlink:href="#eye"></use>
+                        </svg>
+                        <span class="number-views">{{a.num_views}}</span>
+                        <svg class="comment-svg">
+                            <use xlink:href="#comment"></use>
+                        </svg>
+                        <span class="number-comment">{{a.num_comments}}</span>
+                    </div>
+                </header>
+        {% endfor %}
+        </article>
+        {% else %}
+            Статьи не найдены
+        {% endif %}
+    </aside>
+    <aside class="adblock"><!-- Yandex.RTB R-A-2742101-1 -->
+        <div id="yandex_rtb_R-A-2742101-1"></div>
+        <script>window.yaContextCb.push(()=>{
+            Ya.Context.AdvManager.render({
+                "blockId": "R-A-2742101-1",
+                "renderTo": "yandex_rtb_R-A-2742101-1"
+            })
+        })
+        </script>
+    </aside>
+    <!-- Yandex.RTB R-A-2742101-4 -->
+    <aside class="adblock"><!-- Yandex.RTB R-A-2742101-1 -->
+        <div id="yandex_rtb_R-A-2742101-4"></div>
+        <script>
+        window.yaContextCb.push(()=>{
+            Ya.Context.AdvManager.render({
+                "blockId": "R-A-2742101-4",
+                "renderTo": "yandex_rtb_R-A-2742101-4"
+            })
+        })
+        </script>
+    </aside>
+</div>

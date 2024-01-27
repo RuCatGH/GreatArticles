@@ -1,0 +1,25 @@
+User-Agent: *
+Disallow: /profile/
+Disallow: /logout/
+Disallow: /ckeditor5/
+Disallow: /likes/
+Disallow: /filter/
+Disallow: *send_comment
+Disallow: *delete_comment
+Disallow: *edit_comment
+Disallow: *?page=*
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /terms/
+Disallow: /privacy/
+Disallow: /feed/
+Disallow: /__debug__/
+Disallow: *?etext*
+Clean-param: page
+Clean-param: etext
+
+
+Host: greatarticles.ru
+
+Sitemap: https://greatarticles.ru/sitemap.xml
+

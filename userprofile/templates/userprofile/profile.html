@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'userprofile/css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-alert">
+    <div class="profile-arrow"><i class="fa-solid fa-check"></i></div>
+    <div class="alert-text">Информация успешно изменена!</div>
+</div>
+<div class="profile-wrapper">
+    <section class="profile-info">
+        <div class="profile-header"><h1>Профиль</h1></div>
+        <div class="profile-main">
+            <form id="form" action="{% url 'userprofile:save_user_settings' user.id %}"  method="post" value="{{user.id}}">
+                {% csrf_token %}
+                <span class="info-name">Имя пользователя</span>
+                <input id="user-name" class="field" pattern="^[^\s]+(\s.*)?$" title="Уберите пробелы в начале" required type="text" placeholder="Введите имя" value="{{ user.nickname }}">
+                <span class="info-name">E-mail</span>
+                <input class="field" style="opacity: 0.5;" type="text" placeholder="Введите email" value="{{ user.email }}" readonly>
+                <span class="info-name">О себе</span>
+                <textarea id="description" name="" placeholder="Расскажите пользователям о себе">{{user.description}}</textarea>
+                <span class="info-name">Контактные данные</span>
+                <input id="user-social" class="field" type="text" placeholder="Введите контактные данные" value="{{user.user_social}}">
+                <input class="btn-form" type="submit" class="profile-save" value="Сохранить">
+            </form>
+        </div>
+
+    </section>
+    <section class="profile-logout">
+        <div class="profile-icon"><img class="profile-icon-img" src="{{ user.avatar }}" alt="Иконка пользователя" width="100px" height="100px"></div>
+        <div class="profile-name">{{ user.nickname }}</div>
+        <a href="{% url 'logout' %}"><div class="logout-button">Выйти</div></a>
+    </section>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'userprofile/js/profile.js' %}"></script>
+    <script src="{% static 'userprofile/js/ajax.js' %}"></script>
+{% endblock %}

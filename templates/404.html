@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'articles/css/article.css' %}">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+{% endblock %}
+{% block content %}
+{% include 'includes/svg-icon.html' %}
+<section class="main-wrapper">
+    <div class="article-wrapper">
+        <div class="main-article-wrapper error-wrapper">
+            <h1 class="error-404">Ошибка 404</h1>
+            <div class="error-main">
+                <img class="error-img" src="{% static 'img/error_cat.png' %}" alt="Картинка ошибки">
+                <div class="error-text">
+                    <span>Увы, запрашиваемая страница не найдена, но не все теряется! Загляните на наши популярные статьи.</span>
+                    <ul>
+                        <li><a href="">Пять причин, почему четырёхдневная рабочая неделя не работает</a></li>
+                        <li><a href="">Зарплаты разработчиков в первой половине 2022 языки и квалификации</a></li>
+                        <li><a href="">Нужно ли пить ферменты, если кажется, что пища плохо переваривается</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {% include 'includes/sidebar.html' %}
+    </div>
+</section>
+{% endblock %}

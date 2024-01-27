@@ -1,0 +1,6 @@
+venv
+.idea
+*.pycg
+.env
+*/__pycache__/*
+media

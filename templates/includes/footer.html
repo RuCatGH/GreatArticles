@@ -1,0 +1,38 @@
+{% load static %}
+<footer>
+    <div class="container">
+        <div class="about-us footer-block">
+         <div class="logo">
+            <a href="{% url 'articles:index' %}">
+                <svg class="logo-svg">
+                    <use xlink:href="#logo"></use>
+                </svg>
+                <span>GreatArticles</span> </a>
+        </div>
+            <div class="footer-text">GreatArticles – это место, где вы можете узнать
+                все самое интересное из разных областей жизни. Мы публикуем статьи о науках,
+                технологиях, кулинарии и о многом другом. Наша цель – делиться с вами интересными новостями и полезной информацией.</div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="rules footer-block">
+            <div class="footer-title">Правила</div>
+            <a target="_blank" class="footer-text" href="{% url 'terms' %}">Пользовательское соглашение</a>
+            <a target="_blank" class="footer-text" href="{% url 'privacy' %}">Обработка персональных данных</a>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="contact footer-block">
+            <div class="footer-title">Контакты</div>
+            <div class="footer-text">GreatArticles@mail.ru</div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="footer-social footer-block">
+            <div class="footer-title">Соцсети</div>
+            <div class="footer-text"><a href="https://t.me/GreatArticlesChannel"><img src="{% static 'img/telegram-icon.svg' %}"></a>
+                <a href="https://dzen.ru/greatarticles.ru"><img src="{% static 'img/dzen.svg' %}"></a>
+                <a href="https://vk.com/public218671758"><img src="{% static 'img/vk-icon.svg' %}"></a>
+            </div>
+            <div class="footer-text"><a href="https://www.youtube.com/@greatarticles/shorts"><i class="fa-brands fa-youtube icon-youtube"></i></a></div>
+        </div>
+    </div>
+    <div class="copyright">Copyright © 2022–{% now "Y" %}</div>
+</footer>
